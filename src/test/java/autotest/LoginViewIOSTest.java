@@ -3,12 +3,12 @@ package autotest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -76,6 +76,8 @@ public class LoginViewIOSTest {
    * */
   @AfterClass
   public static void tearDown() {
-    driver.quit();
+    if(driver != null){
+      driver.quit();
+    }
   }
 }

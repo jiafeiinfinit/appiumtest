@@ -3,13 +3,12 @@ package autotest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,7 +17,7 @@ public class LoginViewAndroidTest {
 
   private AndroidDriver driver;
 
-  @Before
+  @BeforeTest
   public void setUp() throws MalformedURLException {
     DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
     desiredCapabilities.setCapability("platformName", "Android");
@@ -76,8 +75,10 @@ public class LoginViewAndroidTest {
     
   }
 
-  @After
+  @AfterTest
   public void tearDown() {
-    driver.quit();
+    if(driver != null){
+      driver.quit();
+    }
   }
 }
