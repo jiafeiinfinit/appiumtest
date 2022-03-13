@@ -23,6 +23,7 @@ public class LoginViewAndroidTest {
     desiredCapabilities.setCapability("platformName", "Android");
     desiredCapabilities.setCapability("platformVersion", "9");
     desiredCapabilities.setCapability("deviceName", "emulator");
+    desiredCapabilities.setCapability("app", System.getenv("BITRISE_APK_PATH"));
     desiredCapabilities.setCapability("automationName", "UiAutomator2");
 
     //desiredCapabilities.setCapability("automationName", "uiautomator2");

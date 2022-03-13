@@ -28,6 +28,7 @@ public class LoginViewIOSTest {
     desiredCapabilities.setCapability("platformVersion", "15.2");
     desiredCapabilities.setCapability("deviceName", "iPhone 13 Pro Max");
     desiredCapabilities.setCapability("automationName", "XCUITest");
+    desiredCapabilities.setCapability("app", System.getenv("BITRISE_APK_PATH"));
 
     URL remoteUrl = new URL("http://localhost:4723/wd/hub");
 
