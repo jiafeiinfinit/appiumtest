@@ -1,0 +1,357 @@
+Agent version:	1.44.1
+Hostname:	vm-osx-xcode-13.2.x-g2.4core-705ed92f-9b13-4b7c-8385-70b9b23640ab
+Nodename:	ATL1-vFW02-gen2-mmg4-10-87-100-198
+Start time:	2022-09-24T03:34:55Z
+$ bitrise "run" "--config" "/var/folders/11/nh0v1jld7zd7b9zqm1774gtm0000gn/T/bitrise-agent2204089053/bitrise.yml" "--inventory" "/var/folders/11/nh0v1jld7zd7b9zqm1774gtm0000gn/T/bitrise-agent2204089053/bitrise.secrets.yml" "--json-params-base64" "eyJ3b3JrZmxvdyI6InByaW1hcnkifQ=="
+
+  ██████╗ ██╗████████╗██████╗ ██╗███████╗███████╗
+  ██╔══██╗██║╚══██╔══╝██╔══██╗██║██╔════╝██╔════╝
+  ██████╔╝██║   ██║   ██████╔╝██║███████╗█████╗
+  ██╔══██╗██║   ██║   ██╔══██╗██║╚════██║██╔══╝
+  ██████╔╝██║   ██║   ██║  ██║██║███████║███████╗
+  ╚═════╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝
+
+[32;1m  version: 1.50.0[0m
+
+[36mINFO[0m[03:34:55] [33;1mbitrise runs in Secret Filtering mode[0m 
+[36mINFO[0m[03:34:55] [33;1mbitrise runs in Secret Envs Filtering mode[0m 
+[36mINFO[0m[03:34:55] [33;1mbitrise runs in CI mode[0m           
+[36mINFO[0m[03:34:55] Running workflow: [32;1mprimary[0m         
+
+[34;1mSwitching to workflow:[0m primary
+
+[36mINFO[0m[03:34:55] Step uses latest version -- Updating StepLib ... 
++------------------------------------------------------------------------------+
+| (0) activate-ssh-key@4                                                       |
++------------------------------------------------------------------------------+
+| id: activate-ssh-key                                                         |
+| version: 4.1.0                                                               |
+| collection: https://github.com/bitrise-io/bitrise-steplib.git                |
+| toolkit: go                                                                  |
+| time: 2022-09-24T03:34:59Z                                                   |
++------------------------------------------------------------------------------+
+|                                                                              |
+[34;1mInput:
+[0m- SSHRsaPrivateKey: *****
+- SSHKeySavePath: /Users/vagrant/.ssh/bitrise_step_activate_ssh_key
+- IsRemoveOtherIdentities: true
+- Verbose: false
+$ ssh-add "-l"
+ssh_agent_check_result: 1
+running / accessible ssh-agent detected
+
+$ ssh-add "-D"
+All identities removed.
+
+$ ssh-agent "-k"
+SSH_AGENT_PID not set, cannot kill agent
+Exit code: exit status 1
+
+$ bash "-c" "/var/folders/11/nh0v1jld7zd7b9zqm1774gtm0000gn/T/spawn2294756009/tmp_spawn.sh"
+spawn ssh-add /Users/vagrant/.ssh/bitrise_step_activate_ssh_key
+Identity added: /Users/vagrant/.ssh/bitrise_step_activate_ssh_key (/Users/vagrant/.ssh/bitrise_step_activate_ssh_key)
+
+[32;1mSuccess[0m
+The SSH key was saved to /Users/vagrant/.ssh/bitrise_step_activate_ssh_key
+and was successfully added to ssh-agent.
+|                                                                              |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mactivate-ssh-key@4[0m                                            | 6.54 sec |
++---+---------------------------------------------------------------+----------+
+
+                                          ▼
+
++------------------------------------------------------------------------------+
+| (1) git-clone@6                                                              |
++------------------------------------------------------------------------------+
+| id: git-clone                                                                |
+| version: 6.2.1                                                               |
+| collection: https://github.com/bitrise-io/bitrise-steplib.git                |
+| toolkit: go                                                                  |
+| time: 2022-09-24T03:35:03Z                                                   |
++------------------------------------------------------------------------------+
+|                                                                              |
+[36mINFO[0m[03:35:03]  * [32;1m[OK][0m Step dependency (git-lfs) installed, available. 
+[34;1mConfig:
+[0m- RepositoryURL: git@github.com:jiafeiinfinit/iosbitrise.git
+- CloneIntoDir: /Users/vagrant/git
+- Commit: 
+- Tag: 
+- Branch: main
+- PRDestBranch: 
+- PRID: 0
+- PRSourceRepositoryURL: 
+- PRMergeBranch: 
+- PRHeadBranch: 
+- ResetRepository: false
+- CloneDepth: 0
+- FetchTags: false
+- SubmoduleUpdateDepth: 0
+- ShouldMergePR: true
+- SparseDirectories: []
+- BuildURL: https://app.bitrise.io/build/0673094e-bc16-4a38-93b4-2af70bc2167a
+- BuildAPIToken: [REDACTED]
+- UpdateSubmodules: true
+- ManualMerge: true
+
+[34;1m$ git "init"[0m
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /Users/vagrant/git/.git/
+
+[34;1m$ git "remote" "add" "origin" "git@github.com:jiafeiinfinit/iosbitrise.git"[0m
+
+[34;1m$ git "fetch" "--jobs=10" "--no-tags" "origin" "refs/heads/main"[0m
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+From github.com:jiafeiinfinit/iosbitrise
+ * branch            main       -> FETCH_HEAD
+ * [new branch]      main       -> origin/main
+
+[34;1m$ git "checkout" "main"[0m
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+
+[34;1m$ git "merge" "origin/main"[0m
+Already up to date.
+
+[34;1m$ git "submodule" "update" "--init" "--recursive" "--jobs=10"[0m
+
+[34;1mExporting commit details[0m
+
+[34;1m$ git "log" "-1" "--format=%an" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_AUTHOR_NAME
+   value: jiafei
+
+[34;1m$ git "log" "-1" "--format=%ae" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_AUTHOR_EMAIL
+   value: jiafei@infinit.com.sg
+
+[34;1m$ git "log" "-1" "--format=%H" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_HASH
+   value: 4bfbdad2bcf33ef5309cf0660e33352077878c9e
+
+[34;1m$ git "log" "-1" "--format=%s" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_MESSAGE_SUBJECT
+   value: update 2
+
+[34;1m$ git "log" "-1" "--format=%b" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_MESSAGE_BODY
+   value: 
+
+[34;1m$ git "log" "-1" "--format=%cn" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_COMMITER_NAME
+   value: jiafei
+
+[34;1m$ git "log" "-1" "--format=%ce" "refs/heads/main" &> out[0m
+=> GIT_CLONE_COMMIT_COMMITER_EMAIL
+   value: jiafei@infinit.com.sg
+
+[34;1m$ git "rev-list" "HEAD" "--count" &> out[0m
+=> GIT_CLONE_COMMIT_COUNT
+   value: 5
+
+[32;1mSuccess[0m
+|                                                                              |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mgit-clone@6[0m                                                   | 3.97 sec |
++---+---------------------------------------------------------------+----------+
+
+                                          ▼
+
++------------------------------------------------------------------------------+
+| (2) recreate-user-schemes@1                                                  |
++------------------------------------------------------------------------------+
+| id: recreate-user-schemes                                                    |
+| version: 1.0.5                                                               |
+| collection: https://github.com/bitrise-io/bitrise-steplib.git                |
+| toolkit: go                                                                  |
+| time: 2022-09-24T03:35:07Z                                                   |
++------------------------------------------------------------------------------+
+|                                                                              |
+[34;1mInput:
+[0m- project_path: LoginDemo.xcodeproj
+
+[34;1mCollecting existing Schemes...[0m
+Schemes:
+- LoginDemo.xcodeproj
+
+[31;1mNo shared Schemes found...[0m
+[31;1mThe newly generated Schemes may differ from the ones in your Project.[0m
+[31;1mMake sure to share your Schemes, to prevent unexpected behaviour.[0m
+
+[34;1mGenerating Schemes...[0m
+Recreating Schemes for: LoginDemo.xcodeproj
+
+Created Schemes:
+- LoginDemo.xcodeproj
+  - LoginDemo (Shared)
+
+[32;1mGenerated 1 shared Scheme(s).[0m
+|                                                                              |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mrecreate-user-schemes@1[0m                                       | 2.45 sec |
++---+---------------------------------------------------------------+----------+
+
+                                          ▼
+
++------------------------------------------------------------------------------+
+| (3) xcode-build-for-simulator@0.12                                           |
++------------------------------------------------------------------------------+
+| id: xcode-build-for-simulator                                                |
+| version: 0.12.0                                                              |
+| collection: https://github.com/bitrise-io/bitrise-steplib.git                |
+| toolkit: go                                                                  |
+| time: 2022-09-24T03:35:09Z                                                   |
++------------------------------------------------------------------------------+
+|                                                                              |
+[36mINFO[0m[03:35:09]  * [32;1m[OK][0m Step dependency (go) installed, available. 
+[34;1mConfig:
+[0m- project_path: LoginDemo.xcodeproj
+- scheme: LoginDemo
+- configuration: <unset>
+- artifact_name: <unset>
+- xcodebuild_options: <unset>
+- workdir: /Users/vagrant/git
+- output_dir: /Users/vagrant/deploy
+- is_clean_build: false
+- output_tool: xcpretty
+- simulator_device: iPhone 13 Pro Max
+- simulator_os_version: latest
+- simulator_platform: iOS
+- disable_index_while_building: true
+- code_signing_allowed: false
+- verbose_log: false
+- cache_level: swift_packages
+
+[34;1mStep determined configs:[0m
+- xcodebuildVersion: Xcode 13.2.1 (Build version 13C100)
+
+[34;1mChecking if output tool (xcpretty) is installed[0m
+- xcprettyVersion: 0.3.0
+
+[34;1mSimulator info[0m
+Latest simulator for iPhone 13 Pro Max = 20A6DBBB-AF21-4BA4-8B6D-68CA35924611
+
+[34;1mRunning build[0m
+[03:35:16] [32;1m$ set -o pipefail && xcodebuild "-project" "/Users/vagrant/git/LoginDemo.xcodeproj" "-scheme" "LoginDemo" "-configuration" "Release" "-destination" "id=20A6DBBB-AF21-4BA4-8B6D-68CA35924611" "COMPILER_INDEX_STORE_ENABLE=NO" "CODE_SIGNING_ALLOWED=NO" "build" | xcpretty[0m
+
+[31;1m
+Last lines of the Xcode's build log:[0m
+Analyze workspace
+
+Create build description
+Build description signature: c10c098df29b81872958f3eed99e1b64
+Build description path: /Users/vagrant/Library/Developer/Xcode/DerivedData/LoginDemo-damezglkdryzwfeaxcckqjbqlvea/Build/Intermediates.noindex/XCBuildData/c10c098df29b81872958f3eed99e1b64-desc.xcbuild
+
+note: Build preparation complete
+note: Building targets in dependency order
+/Users/vagrant/git/LoginDemo.xcodeproj: error: One of the paths in DEVELOPMENT_ASSET_PATHS does not exist: /Users/vagrant/git/LoginDemo/Preview Content (in target 'LoginDemo' from project 'LoginDemo')
+** BUILD FAILED **
+[33;1mYou can find the last couple of lines of Xcode's build log above, but the full log is also available in the raw-xcodebuild-output.log
+The log file is stored in $BITRISE_DEPLOY_DIR, and its full path is available in the $BITRISE_XCODE_RAW_RESULT_TEXT_PATH environment variable
+(value: /Users/vagrant/deploy/raw-xcodebuild-output.log)[0m
+[31;1mBuild failed, error: exit status 65[0m
+|                                                                              |
++---+---------------------------------------------------------------+----------+
+| [31;1mx[0m | [31;1mxcode-build-for-simulator@0.12 (exit code: 1)[0m                 | 12.67 sec|
++---+---------------------------------------------------------------+----------+
+| Issue tracker: ...com/bitrise-steplib/steps-xcode-build-for-simulator/issues |
+| Source: https://github.com/bitrise-steplib/steps-xcode-build-for-simulator   |
++---+---------------------------------------------------------------+----------+
+
+                                          ▼
+
++------------------------------------------------------------------------------+
+| (4) deploy-to-bitrise-io@2                                                   |
++------------------------------------------------------------------------------+
+| id: deploy-to-bitrise-io                                                     |
+| version: 2.1.1                                                               |
+| collection: https://github.com/bitrise-io/bitrise-steplib.git                |
+| toolkit: go                                                                  |
+| time: 2022-09-24T03:35:22Z                                                   |
++------------------------------------------------------------------------------+
+|                                                                              |
+[34;1mConfig:
+[0m- PipelineIntermediateFiles: 
+- BuildURL: https://app.bitrise.io/build/0673094e-bc16-4a38-93b4-2af70bc2167a
+- APIToken: [REDACTED]
+- IsCompress: false
+- ZipName: 
+- DeployPath: /Users/vagrant/deploy
+- NotifyUserGroups: everyone
+- NotifyEmailList: 
+- IsPublicPageEnabled: true
+- PublicInstallPageMapFormat: {{range $index, $element := .}}{{if $index}}|{{end}}{{$element.File}}=>{{$element.URL}}{{end}}
+- PermanentDownloadURLMapFormat: {{range $index, $element := .}}{{if $index}}|{{end}}{{$element.File}}=>{{$element.URL}}{{end}}
+- BuildSlug: 0673094e-bc16-4a38-93b4-2af70bc2167a
+- TestDeployDir: /var/folders/11/nh0v1jld7zd7b9zqm1774gtm0000gn/T/test_results1396552876
+- AppSlug: 19137a2d95e353c6
+- AddonAPIBaseURL: [REDACTED]
+- AddonAPIToken: [REDACTED]
+- DebugMode: false
+- BundletoolVersion: 1.8.1
+
+
+[34;1mDeploying the content of the Deploy directory separately[0m
+
+[34;1mList of files to deploy[0m
+- /Users/vagrant/deploy/raw-xcodebuild-output.log
+
+[34;1mDeploying files[0m
+
+[32;1mUploading file: /Users/vagrant/deploy/raw-xcodebuild-output.log[0m
+creating artifact
+  file size: 1127B
+uploading artifact
+finishing artifact
+
+[32;1mSuccess[0m
+You can find the Artifact on Bitrise, on the Build's page: https://app.bitrise.io/build/0673094e-bc16-4a38-93b4-2af70bc2167a
+A map of deployed files and their permanent download urls is now available in the Environment Variable: BITRISE_PERMANENT_DOWNLOAD_URL_MAP (value: raw-xcodebuild-output.log=>https://app.bitrise.io/artifact/72ca1340f06e657b/download)
+
+
+[34;1mUploading test results[0m
+- uploading (0) test results
+[32;1mSuccess[0m
+|                                                                              |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mdeploy-to-bitrise-io@2[0m                                        | 35.35 sec|
++---+---------------------------------------------------------------+----------+
+
+
++------------------------------------------------------------------------------+
+|                               bitrise summary                                |
++---+---------------------------------------------------------------+----------+
+|   | title                                                         | time (s) |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mactivate-ssh-key@4[0m                                            | 6.54 sec |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mgit-clone@6[0m                                                   | 3.97 sec |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mrecreate-user-schemes@1[0m                                       | 2.45 sec |
++---+---------------------------------------------------------------+----------+
+| [31;1mx[0m | [31;1mxcode-build-for-simulator@0.12 (exit code: 1)[0m                 | 12.67 sec|
++---+---------------------------------------------------------------+----------+
+| Issue tracker: ...com/bitrise-steplib/steps-xcode-build-for-simulator/issues |
+| Source: https://github.com/bitrise-steplib/steps-xcode-build-for-simulator   |
++---+---------------------------------------------------------------+----------+
+| [32;1m✓[0m | [32;1mdeploy-to-bitrise-io@2[0m                                        | 35.35 sec|
++---+---------------------------------------------------------------+----------+
+| Total runtime: 1.0 min                                                       |
++------------------------------------------------------------------------------+
+
+[34;1m[0m
+[34;1mSubmitting anonymized usage information...[0m
+[34;1mFor more information visit:[0m
+[34;1mhttps://github.com/bitrise-io/bitrise-plugins-analytics/blob/master/README.md[0m
+
+[31;1mBitrise build failed (exit code: 1)[0m
+exit status 1

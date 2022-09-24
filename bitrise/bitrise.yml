@@ -1,0 +1,178 @@
+---
+format_version: '11'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+workflows:
+  deploy:
+    description: |
+      The workflow tests, builds and deploys the app using *Deploy to bitrise.io* step.
+
+      For testing the *retry_on_failure* test repetition mode is enabled.
+
+      Next steps:
+      - Set up [Connecting to an Apple service with API key](https://devcenter.bitrise.io/en/accounts/connecting-to-services/connecting-to-an-apple-service-with-api-key.html##).
+      - Or further customise code signing following our [iOS code signing](https://devcenter.bitrise.io/en/code-signing/ios-code-signing.html) guide.
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@6: {}
+    - cache-pull@2: {}
+    - recreate-user-schemes@1:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+    - xcode-test@4:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - test_repetition_mode: retry_on_failure
+    - xcode-archive@4:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - distribution_method: "$BITRISE_DISTRIBUTION_METHOD"
+        - automatic_code_signing: api-key
+    - cache-push@2: {}
+    - deploy-to-bitrise-io@2: {}
+  primary:
+    description: |
+      The workflow executes the tests. The *retry_on_failure* test repetition mode is enabled.
+
+      Next steps:
+      - Check out [Getting started with iOS apps](https://devcenter.bitrise.io/en/getting-started/getting-started-with-ios-apps.html).
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@6: {}
+    - recreate-user-schemes@1: {}
+    - cache-pull@2: {}
+    - cache-pull@2: {}
+    - xcode-build-for-simulator@0.12:
+        inputs:
+        - simulator_device: iPhone 13 Pro Max
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+
+            # write your script here
+            echo "Make dir!"
+            mkdir iosappiumtest
+
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+        title: Make dir
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+
+            # write your script here
+            echo "Hello World!"
+            cd /Users/vagrant/git/iosappiumtest/
+
+            echo "Cloning iOS-Automation"
+            git clone https://github.com/jiafeiinfinit/appiumtest.git
+
+            cd appiumtest/
+
+
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+        title: Clone MobileAutomation Repo
+    - script@1:
+        inputs:
+        - content: |2-
+
+            npm install -g appium
+
+            appium &
+        title: Start Appium Server
+    - script@1:
+        title: iOS Dependencies
+        inputs:
+        - content: |2-
+
+            #Install maven
+            brew install maven
+
+            # Install idevice installer
+            brew install ideviceinstaller
+
+            # Install iOS Deploy
+            npm install -g ios-deploy --unsafe-perm=true --allow-root
+
+            # Install iOS Simulator
+            npm install ios-sim -g --unsafe-perm=true --allow-root
+        is_always_run: true
+    - script@1:
+        title: Start iOS Simulator
+        inputs:
+        - content: |2
+
+            #Start iPhone 13 pro simulator
+            ios-sim start --devicetypeid com.apple.CoreSimulator.SimDeviceType.iPhone-13-Pro-Max
+
+            # check if the simulator is up
+            xcrun simctl list | egrep '(Booted)'
+        is_always_run: true
+    - script@1:
+        title: Install web driver agent
+        inputs:
+        - content: |2
+
+            # Navigate to appium directory where webdriver agent is located
+            # cd /usr/local/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent
+            # ls
+            cd /usr/local/lib/node_modules/appium/node_modules/
+            ls
+
+            # Run the bootstrap script
+            # bash Scripts/bootstrap.sh -d
+        is_always_run: true
+    - script@1:
+        title: Run appium test
+        inputs:
+        - content: |
+            # Run iOS appium Test
+            cd /Users/vagrant/git/iosappiumtest/appiumtest
+            ls -la
+
+            mvn clean test -Pios -DappPath="$BITRISE_APP_DIR_PATH" -DdeviceModel="$SIMULATOR_DEVICE_MODEL" -DosVersion="$SIMULATOR_OS_VERSION"
+        is_always_run: true
+    - deploy-to-bitrise-io@2: {}
+    - cache-push@2: {}
+meta:
+  bitrise.io:
+    stack: osx-xcode-13.2.x
+    machine_type_id: g2.4core
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: LoginDemo.xcodeproj
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: LoginDemo
+  - opts:
+      is_expand: false
+    BITRISE_DISTRIBUTION_METHOD: development
+  - opts:
+      is_expand: false
+    SIMULATOR_OS_VERSION: '15.2'
+  - opts:
+      is_expand: false
+    SIMULATOR_DEVICE_MODEL: iPhone 13 Pro Max
