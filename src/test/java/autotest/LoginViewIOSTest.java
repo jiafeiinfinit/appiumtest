@@ -33,7 +33,7 @@ public class LoginViewIOSTest {
    if (osVersion != null) {
         desiredCapabilities.setCapability("platformVersion", osVersion);
     } else {
-        desiredCapabilities.setCapability("platformVersion", "15.5");
+        desiredCapabilities.setCapability("platformVersion", "15.2");
     }
     desiredCapabilities.setCapability("deviceName", "iPhone 13 Pro Max");
     desiredCapabilities.setCapability("automationName", "XCUITest");
