@@ -25,7 +25,7 @@ public class LoginViewIOSTest {
   public static void setUp() throws MalformedURLException {
     DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
     desiredCapabilities.setCapability("platformName", "iOS");
-    desiredCapabilities.setCapability("platformVersion", "15.2");
+    desiredCapabilities.setCapability("platformVersion", "15.5");
     desiredCapabilities.setCapability("deviceName", "iPhone 13 Pro Max");
     desiredCapabilities.setCapability("automationName", "XCUITest");
     desiredCapabilities.setCapability("app", System.getenv("BITRISE_APK_PATH"));
