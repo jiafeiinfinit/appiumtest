@@ -23,16 +23,39 @@ public class LoginViewIOSTest {
    * */
   @BeforeClass
   public static void setUp() throws MalformedURLException {
+      // From CI env
+    String deviceModel = System.getProperty("deviceModel");
+    String osVersion = System.getProperty("osVersion");
+    String appPath = System.getProperty("appPath");
+
     DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
     desiredCapabilities.setCapability("platformName", "iOS");
-    desiredCapabilities.setCapability("platformVersion", "15.5");
+   if (osVersion != null) {
+        desiredCapabilities.setCapability("platformVersion", osVersion);
+    } else {
+        desiredCapabilities.setCapability("platformVersion", "15.5");
+    }
     desiredCapabilities.setCapability("deviceName", "iPhone 13 Pro Max");
     desiredCapabilities.setCapability("automationName", "XCUITest");
-    desiredCapabilities.setCapability("app", System.getenv("BITRISE_APK_PATH"));
+    desiredCapabilities.setCapability("autoGrantPermissions", "true");
+
+    if(appPath != null) {
+      desiredCapabilities.setCapability("appium:app", appPath);
+    } else if (true) {
+        desiredCapabilities.setCapability("appium:app", "");
+    } else {
+        // no-po
+    }
+
+    desiredCapabilities.setCapability("bundleId", "com.auto.LoginDemo");
+    desiredCapabilities.setCapability("launchTimeout","20000");
+    
 
     URL remoteUrl = new URL("http://localhost:4723/wd/hub");
 
     driver = new IOSDriver(remoteUrl, desiredCapabilities);
+
+    System.out.println("driver created successfully.");
   }
 
   @Test
